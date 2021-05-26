@@ -1,21 +1,36 @@
 import requests
 from bs4 import BeautifulSoup
 
-BASE_URL = "https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=5DS_RELIGIONE"
-response = requests.get(BASE_URL + "index.html")
-html = response.content
+s = requests.Session()
+
+headers = {
+    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'
+}
+
+
+login_data = {
+    'name': 'username',
+    'pass': 'password',
+    'o' : 'L2N2di9hcHAvZGVmYXVsdC9naW9wcm9mLnBocD9jbGFzc2VfaWQ9Jm1hdGVyaWE9MjAzOTY1Jm9wZT1MRVomY29kb2NlbnphPTEmZ3J1cHBvX2lkPTFBQ19SRUxJR0lPTkU='
+}
+
+#response = s.post('https://web.spaggiari.eu/home/app/default/menu_classevivadocente.php', data=login_data)
+r = s.get('https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE')
+#print(r)
+
+import pandas as pd
+
+df = pd.read_html('https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE')
+
+print(df)
+
+
+html = r.content
 soup = BeautifulSoup(html, 'html.parser')
 
-r = soup.select('tbody tr td')
+j = soup.find_all('a')
 
 
-
-
-
-# row = r[0]
-# name = row.select_one('.source-title').text.strip()
-# print(name)
-
-
+#print(j)
 
 
