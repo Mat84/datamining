@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 s = requests.Session()
 
@@ -18,11 +19,10 @@ login_data = {
 r = s.get('https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE')
 #print(r)
 
-import pandas as pd
 
-df = pd.read_html('https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE')
+#df = pd.read_html('https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE')
 
-print(df)
+#print(df)
 
 
 html = r.content
