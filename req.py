@@ -1,36 +1,37 @@
-import requests
+pip install selenium
+
+pip install webdriver-manager
+
+import selenium.webdriver.common.keys
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
 from bs4 import BeautifulSoup
-import pandas as pd
 
-s = requests.Session()
+browser = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
 
-headers = {
-    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'
-}
+def login():
+    url      = 'https://web.spaggiari.eu/home/app/default/login.php?custcode='
+    username = 'BOLS0006.*******'
+    password = '****************'
+    browser.get(url)
+    browser.find_element_by_id('login').send_keys(username)
+    browser.find_element_by_id('password').send_keys(password)
+    browser.find_element_by_class_name('check-auth').click()
 
+login()
 
-login_data = {
-    'name': 'username',
-    'pass': 'password',
-    'o' : 'L2N2di9hcHAvZGVmYXVsdC9naW9wcm9mLnBocD9jbGFzc2VfaWQ9Jm1hdGVyaWE9MjAzOTY1Jm9wZT1MRVomY29kb2NlbnphPTEmZ3J1cHBvX2lkPTFBQ19SRUxJR0lPTkU='
-}
+url2 = 'https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE'
+browser.get(url2)
+browser.find_element_by_class_name('align_middle font_size_14 header headerSortDown').click()
 
-#response = s.post('https://web.spaggiari.eu/home/app/default/menu_classevivadocente.php', data=login_data)
-r = s.get('https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE')
-#print(r)
+html = browser.page_source
+html
 
-
-#df = pd.read_html('https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id=1AC_RELIGIONE')
-
-#print(df)
-
-
-html = r.content
 soup = BeautifulSoup(html, 'html.parser')
+lezioni = soup.find_all("span",{"class":"nota_1"})
 
-j = soup.find_all('a')
-
-
-#print(j)
-
+print(lezioni)
 
