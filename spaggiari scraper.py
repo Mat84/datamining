@@ -10,8 +10,8 @@ browser = webdriver.Chrome(ChromeDriverManager().install())
 
 def login():
     url      = 'https://web.spaggiari.eu/home/app/default/login.php?custcode='
-    username = 'BOLS0006.********'
-    password = '************'
+    username = input('inserire username')
+    password = input('inserire password')
     browser.get(url)
     browser.find_element_by_id('login').send_keys(username)
     browser.find_element_by_id('password').send_keys(password)
