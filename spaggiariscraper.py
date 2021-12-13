@@ -14,7 +14,7 @@ def login(browser,username,password):
     browser.get(url)
     browser.find_element_by_id('login').send_keys(username)
     browser.find_element_by_id('password').send_keys(password)
-    browser.find_element_by_class_name('check-auth').click()
+    browser.find_element_by_class_name('accedi.btn.btn-primary').click()
 
 
 def inside(browser,class_name):
