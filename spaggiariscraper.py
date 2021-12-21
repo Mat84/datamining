@@ -1,8 +1,11 @@
+        #___________________SPAGGIARI_SCRAPER____________________#
+#############################################################################
 import selenium
 import selenium.webdriver.common.keys
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.utils import ChromeType
 from bs4 import BeautifulSoup
@@ -17,14 +20,20 @@ def login(browser,username,password):
     browser.find_element_by_class_name('accedi.btn.btn-primary').click()
 
 
-def inside(browser,class_name):
-    url2 = 'https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id={}_RELIGIONE'.format(class_name)
+def inside(browser,class_name,materia):
+    url2 = f'https://web.spaggiari.eu/cvv/app/default/gioprof.php?classe_id=&materia=203965&ope=LEZ&codocenza=1&gruppo_id={class_name}_{materia}'
     browser.get(url2)
+    
+    ######ALTERNATIVE METHOD########
+    #browser.find_element_by_xpath('//*[@id="data_table"]/tbody/tr[16]/td[3]/a').click()
+    #url2 = browser.find_element_by_xpath('//*[@id="data_table"]/tbody/tr[3]/td[3]/div/div[2]/div[1]/a').click()
+    #url2.format(class_name)
 
-
+    
 def downloader():
     username=user_entry.get()
     password=pass_entry.get()
+    materia=materia_entry.get()
     classi=classi_entry.get()
     classi=classi.split(',')
     class_list=[j.strip() for j in classi]
@@ -39,7 +48,7 @@ def downloader():
     # Cycle all classes    
     for class_name in class_list:
         print(class_name)
-        inside(browser,class_name)
+        inside(browser,class_name,materia)
         time.sleep(5)
 
         html = browser.page_source
@@ -69,25 +78,25 @@ if __name__ == '__main__':
     master_fun = tk.Tk()
     user_entry = tk.Entry(master_fun)
     pass_entry = tk.Entry(master_fun)
+    materia_entry = tk.Entry(master_fun)
     classi_entry = tk.Entry(master_fun)
     user_label=tk.Label(master_fun, text = 'inserire username')
     pass_label=tk.Label(master_fun, text = 'inserire password')
-    classi_label=tk.Label(master_fun, text = 'scegli le tue classi')
+    materia_label=tk.Label(master_fun, text = 'la tua materia')
+    classi_label=tk.Label(master_fun, text = 'le tue classi')
     classi='1AC,1AS,1BS,1DS,1ES,2AC,2AS,2AS,2DS,3AC,3AS,3BS,4AC,4AS,4BS,4DS,5AC,5BS,5DS'
     classi_entry.insert(0,classi)
     user_label.pack()
     user_entry.pack()
     pass_label.pack()
     pass_entry.pack()
+    materia_label.pack()
+    materia_entry.pack()
     classi_label.pack()
     classi_entry.pack()
     user_entry.focus_set()
 
-    button = tk.Button(master_fun, text = "download", width = 15, command = downloader)
+    button = tk.Button(master_fun, text = "download", width = 50, command = downloader)
     button.pack()
 
     tk.mainloop()
-
-
-
-
