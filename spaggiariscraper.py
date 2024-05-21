@@ -13,7 +13,7 @@ import tkinter as tk
 #############################################################################
 
 def login(browser,username,password):
-    url      = 'https://web.spaggiari.eu/home/app/default/login.php?custcode='
+    url      = 'https://web.spaggiari.eu/home/app/default/login.php'
     browser.get(url)
     browser.find_element_by_id('login').send_keys(username)
     browser.find_element_by_id('password').send_keys(password)
