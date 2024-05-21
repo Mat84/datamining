@@ -84,7 +84,7 @@ if __name__ == '__main__':
     pass_label=tk.Label(master_fun, text = 'inserire password')
     materia_label=tk.Label(master_fun, text = 'la tua materia')
     classi_label=tk.Label(master_fun, text = 'le tue classi')
-    classi='1AC,1AS,1BS,1DS,1ES,2AC,2AS,2AS,2DS,3AC,3AS,3BS,4AC,4AS,4BS,4DS,5AC,5BS,5DS'
+    classi='1A_CL,1CS,1DS,1ES,1NSU_ES,2A_CL,3A_CL,3ES,4A_CL,4AS,4BS,4CS,4DS,4ES'
     classi_entry.insert(0,classi)
     user_label.pack()
     user_entry.pack()
